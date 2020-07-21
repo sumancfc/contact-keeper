@@ -1,0 +1,4 @@
+{
+    "mongoURL": "mongodb+srv://sumancfc:sumancfc@contactkeeperbysuman.tpryl.mongodb.net/<dbname>?retryWrites=true&w=majority",
+    "jwtSecret": "secret"
+}
