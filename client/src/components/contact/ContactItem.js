@@ -1,22 +1,39 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Card, Button, CardTitle, CardText, Badge } from "reactstrap";
+import ContactContext from "../../context/contact/contactContext";
 
 const ContactItem = ({ contact }) => {
+  const { deleteContact, clearCurrent, setCurrent } = useContext(
+    ContactContext
+  );
+  const { id, name, email, phone, type } = contact;
+
+  const handleDelete = () => {
+    deleteContact(id);
+    clearCurrent();
+  };
+
   return (
-    <Card body className='mb-3'>
+    <Card body className='m-3'>
       <CardTitle>
-        {contact.name}{" "}
-        <Badge color={contact.type === "personal" ? "primary" : "success"}>
-          {contact.type}
+        {name}{" "}
+        <Badge color={type === "personal" ? "primary" : "success"}>
+          {type}
         </Badge>
       </CardTitle>
-      <CardText>Email: {contact.email}</CardText>
-      <CardText>Phone: {contact.phone}</CardText>
+      <CardText>Email: {email}</CardText>
+      <CardText>Phone: {phone}</CardText>
       <div className='mt-3'>
-        <Button color='primary' className='mr-3'>
+        <Button
+          color='primary'
+          className='mr-3'
+          onClick={() => setCurrent(contact)}
+        >
           Edit
         </Button>
-        <Button color='danger'>Delete</Button>
+        <Button color='danger' onClick={handleDelete}>
+          Delete
+        </Button>
       </div>
     </Card>
   );

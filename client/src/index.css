@@ -53,3 +53,49 @@ p {
 .card-title {
   color: #fa4f26;
 }
+
+h2 {
+  color: #fff;
+  padding: 0 10px;
+}
+
+.item-enter {
+  opacity: 0;
+}
+.item-enter-active {
+  opacity: 1;
+  transition: opacity 500ms ease-in;
+}
+.item-exit {
+  opacity: 1;
+}
+.item-exit-active {
+  opacity: 0;
+  transition: opacity 500ms ease-in;
+}
+
+.scroll {
+  background-color: #eaeaea;
+  display: block;
+  height: 100vh;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+  width: 100%;
+}
+
+#scroll::-webkit-scrollbar-track {
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  background-color: #f5f5f5;
+}
+
+#scroll::-webkit-scrollbar {
+  width: 1rem;
+  background-color: #f5f5f5;
+}
+
+#scroll::-webkit-scrollbar-thumb {
+  border-radius: 10px;
+  -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
+  background-color: #fa4f26;
+}
