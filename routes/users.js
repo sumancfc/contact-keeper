@@ -1,21 +1,17 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const { check, validationResult } = require('express-validator');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../models/User');
+const User = require("../models/User");
 
-// @route    POST api/users
-// @desc     Get The users
-// @access  Public
 router.post(
-  '/',
+  "/signup",
   [
-    check('name', 'Please enter name').not().isEmpty(),
-    check('email', 'Please Enter valid email').isEmail(),
-    check('password', 'Please enter password of min length 6').isLength({
+    check("name", "Please enter name").not().isEmpty(),
+    check("email", "Please Enter valid email").isEmail(),
+    check("password", "Please enter password of min length 6").isLength({
       min: 6,
     }),
   ],
@@ -31,7 +27,7 @@ router.post(
       let user = await User.findOne({ email });
 
       if (user) {
-        return res.status(400).json({ msg: 'User already exits' });
+        return res.status(400).json({ msg: "User already exits" });
       }
 
       user = new User({
@@ -53,7 +49,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.JWT_SECRET,
         {
           expiresIn: 360000,
         },
@@ -64,7 +60,7 @@ router.post(
       );
     } catch (error) {
       console.error(error.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );

@@ -1,34 +1,27 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
-const config = require('config');
-const auth = require('../middleware/auth');
-const { check, validationResult } = require('express-validator');
+const bcrypt = require("bcryptjs");
+const jwt = require("jsonwebtoken");
+const auth = require("../middleware/auth");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../models/User');
+const User = require("../models/User");
 
-// @route    GET api/auth
-// @desc     Get the logged users
-// @access  Private
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
-    const user = await User.findById(req.user.id).select('-password');
+    const user = await User.findById(req.user.id).select("-password");
     res.json(user);
   } catch (error) {
     console.error(error.message);
-    res.send(500).send('Server Error');
+    res.send(500).send("Server Error");
   }
 });
 
-// @route    POST api/auth
-// @desc     Auth user and get token
-// @access  Public
 router.post(
-  '/',
+  "/login",
   [
-    check('email', 'Plsease, enter valid email').isEmail(),
-    check('password', 'Please, enter a valid password').exists(),
+    check("email", "Plsease, enter valid email").isEmail(),
+    check("password", "Please, enter a valid password").exists(),
   ],
   async (req, res) => {
     const errors = validationResult(req);
@@ -42,13 +35,13 @@ router.post(
       let user = await User.findOne({ email });
 
       if (!user) {
-        return res.status(400).json({ msg: 'Invalid Credientials' });
+        return res.status(400).json({ msg: "Invalid Credientials" });
       }
 
       const isMatch = await bcrypt.compare(password, user.password);
 
       if (!isMatch) {
-        return res.status(400).json({ msg: 'Invalid Credientials' });
+        return res.status(400).json({ msg: "Invalid Credientials" });
       }
 
       //jwt
@@ -60,7 +53,7 @@ router.post(
 
       jwt.sign(
         payload,
-        config.get('jwtSecret'),
+        process.env.JWT_SECRET,
         {
           expiresIn: 360000,
         },
@@ -71,7 +64,7 @@ router.post(
       );
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );

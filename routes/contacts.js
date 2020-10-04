@@ -1,15 +1,11 @@
-const express = require('express');
+const express = require("express");
 const router = express.Router();
-const auth = require('../middleware/auth');
-const { check, validationResult } = require('express-validator');
+const auth = require("../middleware/auth");
+const { check, validationResult } = require("express-validator");
 
-const User = require('../models/User');
-const Contact = require('../models/Contact');
+const Contact = require("../models/Contact");
 
-// @route    GET api/contacts
-// @desc     Register a user
-// @access  Private
-router.get('/', auth, async (req, res) => {
+router.get("/", auth, async (req, res) => {
   try {
     const contacts = await Contact.find({ user: req.user.id }).sort({
       date: -1,
@@ -17,16 +13,13 @@ router.get('/', auth, async (req, res) => {
     res.json(contacts);
   } catch (err) {
     console.error(err.message);
-    res.status(500).send('Server Error');
+    res.status(500).send("Server Error");
   }
 });
 
-// @route    POST api/contacts
-// @desc     Add new contact
-// @access  Private
 router.post(
-  '/',
-  [auth, [check('name', 'Please, enter valid name').not().isEmpty()]],
+  "/",
+  [auth, [check("name", "Please, enter valid name").not().isEmpty()]],
   async (req, res) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
@@ -48,23 +41,17 @@ router.post(
       res.json(contact);
     } catch (err) {
       console.error(err.message);
-      res.status(500).send('Server Error');
+      res.status(500).send("Server Error");
     }
   }
 );
 
-// @route    Put api/contacts/:id
-// @desc     Update contact
-// @access  Private
-router.put('/:id', (req, res) => {
-  res.send('Update contact');
+router.put("/:id", (req, res) => {
+  res.send("Update contact");
 });
 
-// @route    delete api/contacts/:id
-// @desc     Delete contact
-// @access  Private
-router.delete('/:id', (req, res) => {
-  res.send('Delete contact');
+router.delete("/:id", (req, res) => {
+  res.send("Delete contact");
 });
 
 module.exports = router;

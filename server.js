@@ -1,20 +1,21 @@
-const express = require('express');
-const connectDB = require('./config/db');
+const express = require("express");
+require("dotenv").config;
+const connectDB = require("./database");
 
 const app = express();
 
 //Connect DB
 connectDB();
 
-//Init Middleware
+//Middleware
 app.use(express.json({ extended: false }));
 
-const PORT = process.env.PORT || 5000;
-
 //Routes
-app.use('/api/users', require('./routes/users.js'));
-app.use('/api/auth', require('./routes/auth.js'));
-app.use('/api/contacts', require('./routes/contacts.js'));
+app.use("/api/users", require("./routes/users.js"));
+app.use("/api/users", require("./routes/auth.js"));
+app.use("/api/contacts", require("./routes/contacts.js"));
+
+const PORT = process.env.PORT || 8000;
 
 app.listen(PORT, () => {
   console.log(`Server starts at port ${PORT}`);
