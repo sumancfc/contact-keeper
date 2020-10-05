@@ -2,11 +2,17 @@ import React, { useContext, useEffect, useState } from "react";
 import AlertContext from "../../context/alert/alertContext";
 import AuthContext from "../../context/auth/authContext";
 
-const Signup = ({ history }) => {
+const Signup = (props) => {
   const { setAlert } = useContext(AlertContext);
-  const { registerUser, clearError, error, isAuthenticated } = useContext(
-    AuthContext
-  );
+  const { registerUser, clearError, error } = useContext(AuthContext);
+
+  useEffect(() => {
+    if (error === "User already exists") {
+      setAlert(error, "danger");
+      clearError();
+    }
+    // eslint-disable-next-line
+  }, [error]);
 
   const [user, setUser] = useState({
     name: "",
@@ -16,18 +22,6 @@ const Signup = ({ history }) => {
   });
 
   const { name, email, password, confirmPassword } = user;
-
-  useEffect(() => {
-    if (isAuthenticated) {
-      history.push("/login");
-    }
-
-    if (error === "User already exits") {
-      setAlert(error, "danger");
-      clearError();
-    }
-    //eslint-disable-next-line
-  }, [error, isAuthenticated, history]);
 
   const handleChange = (e) => {
     setUser({ ...user, [e.target.name]: e.target.value });
@@ -40,7 +34,9 @@ const Signup = ({ history }) => {
     } else if (password !== confirmPassword) {
       setAlert("Passwords not match", "danger");
     } else {
-      registerUser({ name, email, password });
+      registerUser({ name, email, password }).then(() => {
+        props.history.push("/login");
+      });
     }
   };
 

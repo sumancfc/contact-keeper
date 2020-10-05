@@ -103,7 +103,7 @@ const ContactForm = () => {
           Professional
         </div>
 
-        <div className='mt-2'>
+        <div className='mt-3 mb-5'>
           <button type='submit' className='btn btn-warning'>
             {current ? "Edit Contact" : "Add Contact"}
           </button>

@@ -34,7 +34,7 @@ const NavbarContact = (props) => {
     return (
       <>
         <NavItem>
-          <Link to='#' className='nav-link'>
+          <Link to='/' className='nav-link'>
             Welcome {user && user.name}
           </Link>
         </NavItem>
