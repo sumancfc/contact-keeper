@@ -9,7 +9,7 @@ const ContactFilter = () => {
     if (filtered === null) {
       text.current.value = "";
     }
-  }, []);
+  }, [filtered]);
 
   const handleFilter = (e) => {
     if (text.current.value !== "") {

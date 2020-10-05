@@ -55,7 +55,7 @@ router.post(
         },
         (err, token) => {
           if (err) throw err;
-          res.josn({ token });
+          res.json({ token });
         }
       );
     } catch (error) {

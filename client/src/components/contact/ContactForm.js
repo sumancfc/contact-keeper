@@ -1,6 +1,5 @@
 import React, { useState, useContext, useEffect } from "react";
 import ContactContext from "../../context/contact/contactContext";
-import { CLEAR_CURRENT } from "../../context/types";
 
 const ContactForm = () => {
   const contactContext = useContext(ContactContext);
@@ -58,6 +57,7 @@ const ContactForm = () => {
             name='name'
             value={name}
             onChange={handleChange}
+            required
           />
         </div>
         <div className='form-group'>
@@ -68,6 +68,7 @@ const ContactForm = () => {
             name='email'
             value={email}
             onChange={handleChange}
+            required
           />
         </div>
         <div className='form-group'>
@@ -78,6 +79,7 @@ const ContactForm = () => {
             name='phone'
             value={phone}
             onChange={handleChange}
+            required
           />
         </div>
         <div className='form-check'>
